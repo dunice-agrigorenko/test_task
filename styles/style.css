@@ -1,0 +1,11 @@
+table {
+	border: 1px solid black; border-collapse:collapse
+}
+
+td { 
+	border:1px solid black; padding: 5px 25px 5px 5px;
+}
+
+#my_table td[contenteditable] {
+	background-color: #b1dcfc; color: black;
+}
