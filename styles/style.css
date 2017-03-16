@@ -6,6 +6,10 @@ body {
 table {
 	border: 2px solid black; border-collapse:collapse;
 	background:#ffffff;
+	display: inline-block;
+	max-height: 700px;
+	overflow: auto;
+	margin:0 -100px;
 }
 
 td { 
@@ -16,10 +20,8 @@ td {
 	background-color: #b1dcfc; color: black;
 }
 .content {
-	display:inline-block;
 	position: absolute;
 	left:35%;
-	margin: auto;
 }
 
 .form {
@@ -31,25 +33,27 @@ td {
 	font-weight: bolder;
 }
 #add{
-	margin-top: 4%;
+	position:absolute;
+	top:1em;
+	left: 18.5em;
 	border-radius: 10px;
 	width: 60px;
 	height:60px;
-  	color: black;
+  	color: white;
   	outline: none;
   	border-width: 2px 0;
   	border-style: solid none;
   	border-color: #FDBE33 #000 #D77206;
   	border-radius: 6px;
-  	background: #F7C271;
+  	background: linear-gradient(#F3AE0F, #E38916) #E38916;
 }
-#add:hover { background: #F6AB39}
-#add:active { background: #f59500 }
+#add:hover { background: linear-gradient(#f5ae00, #f59500) #f5ae00;}
+#add:active { background: linear-gradient(#f59500, #f5ae00) #f59500; }
 input {
 	box-shadow: 1px 1px 0px #efefef;
 	background:linear-gradient(white, #E9E9E9);
 }
-input:focus {
+.form input:focus {
 	box-shadow: 0px 0px 10px #007eff;
 }
 #title {
@@ -60,3 +64,33 @@ input:focus {
 	text-align: center;
 	font-size: 22px;
 }
+
+#clear_all {
+	position:absolute;
+	top:1em;
+	left: 24em;
+	border-radius: 10px;
+	width: 60px;
+	height:60px;
+  	color: white;
+  	outline: none;
+  	border-width: 2px 0;
+  	border-style: solid none;
+  	border-color: #FDBE33 #000 #D77206;
+  	border-radius: 6px;
+  	background: linear-gradient(#F3AE0F, #E38916) #E38916;
+}
+#clear_all:hover { background: linear-gradient(#f5ae00, #f59500) #f5ae00;}
+#clear_all:active { background: linear-gradient(#f59500, #f5ae00) #f59500; }
+.delete_button {
+	color: white;
+  	outline: none;
+  	border-width: 2px 0;
+  	border-style: solid none;
+  	border-color: #FDBE33 #000 #D77206;
+  	border-radius: 6px;
+  	background: linear-gradient(#FA6767, #FA2F2F);
+  	margin-left:20%;
+}
+.delete_button:hover { background: linear-gradient(#FA2F2F, #9A0000) #f5ae00;}
+.delete_button:active { background: linear-gradient(#9A0000, #FA2F2F) #f59500; }
