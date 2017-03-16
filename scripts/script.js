@@ -10,12 +10,11 @@ function currentDate(){ //функция получения новой даты
 	var testdate = time.getDate().padLeft() + '.' +  ( time.getMonth() + 1).padLeft() + '.' +   time.getFullYear() + ' ' +time.getHours() + ':' + time.getMinutes().padLeft();
     return testdate;
 }
+
 $(document).ready(function(){
 	//При загрузке DOM 
-	
 
-
-	var dataArray = JSON.parse(localStorage.getItem("data"));//переменная перевод массива из json'a в JS объект
+	var dataArray = localStorage.data ? JSON.parse(localStorage.getItem("data")) : [];//переменная перевод массива из json'a в JS объект
     
     if(dataArray!==null){ //если массив не пустой, то создаем строку таблицы  с соотв. данными из local storage
     	for (var i = 0; i < dataArray.length; i++) {    		
@@ -36,10 +35,10 @@ $(document).ready(function(){
 
 	//клик по кнопке добавить
     $('#add').click(function () {
-    	temp_date = currentDate(); // переменная содержащая массив который будем передавать в хранилище
+    	temp_date = currentDate();
     	alert(Date.now())
     	var obj = {
-		    id: Date.now(),
+		    id: +new Date(),
 		    title: $('#title').val(),		   
 		    author: $('#author').val(),
 		    done: false,
@@ -47,7 +46,8 @@ $(document).ready(function(){
 		};		
 		
 		if ((document.getElementById('title').value != "")&&(document.getElementById('author').value != "")){
-		//Если пришел null 
+		
+		//Если массив отсутствует
 		if(dataArray===null){
 			dataArray = [];//Создаем пустой массив
 		}
@@ -63,7 +63,7 @@ $(document).ready(function(){
     		<td>"+temp_date+"</td>\
     		<td><button class='delete_button'>Delete</button></td>\
    		 </tr>");   
-    	 	location.reload();
+    	 	// location.reload();
     	 }
     	 else {
     	 	alert('The field can not be empty')
@@ -74,7 +74,6 @@ $(document).ready(function(){
 
 	//Удаление записи
 	$('#my_table').on('click', '.delete_button', function() {
-
         var tr = $(this).closest('tr');
         
         //Удалить из local storage -----------------------------

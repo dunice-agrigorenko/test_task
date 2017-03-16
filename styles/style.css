@@ -82,6 +82,7 @@ input {
 }
 #clear_all:hover { background: linear-gradient(#f5ae00, #f59500) #f5ae00;}
 #clear_all:active { background: linear-gradient(#f59500, #f5ae00) #f59500; }
+
 .delete_button {
 	color: white;
   	outline: none;
