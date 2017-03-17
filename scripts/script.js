@@ -64,7 +64,7 @@ $(document).ready(function(){
           var serialObj = JSON.stringify(dataArray); //сериализуем его 
           localStorage.setItem("data", serialObj); //запишем его в хранилище
           $('tbody>tr').css("background-color","#FF3700");
-          $('tbody>tr').fadeOut(400);
+          $('tbody>tr').remove();
       }
     })
 
@@ -152,7 +152,7 @@ $(document).ready(function(){
         for( i=0; i<dataArray.length; i++) {          
         	if( dataArray[i].done == true){
             	$("tr[data-id="+dataArray[i].id+"]").css("background-color","#FF3700"); 
-        		$("tr[data-id="+dataArray[i].id+"]").fadeOut(400);
+        		$("tr[data-id="+dataArray[i].id+"]").remove();
         		dataArray.splice(i,1);//Удаляем
         		i--
         	} 
