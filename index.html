@@ -22,8 +22,16 @@
 		<p><label>Author: <input type="text" id="author"></input></label></div>
 		<button id="add">Add</button></p>
 		<button id="clear_all">Remove all</button>
+		<button id="rm_completed">Remove completed</button>
+	<br>
+	<div class="choose">
+<label><input type="radio" name='rbtn' id="all" value="all" checked><span>All</span></label>
+<label><input type="radio" name='rbtn' id="completed"><span>Completed</span></label>
+<label><input type="radio" name='rbtn' id="not_completed"><span>Not completed</span></label>
+</div>
 	<br>
 	<table id="my_table">
+	  <thead>
 		<tr id="field">
     		<td>Status</td>
     		<td>Name</td>
@@ -31,7 +39,9 @@
     		<td>Last Update</td>
     		<td>Action</td>
    		 </tr>
-    	
+      </thead>
+
+      <tbody></tbody>
 	</table>
 </div>
 </body>
