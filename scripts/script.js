@@ -11,37 +11,41 @@ function currentDate() { //функция получения новой даты
 function fill_table(dataArray) { //функция отрисовки таблицы
     if (dataArray !== null) { //если массив не пустой, то создаем строку таблицы  с соотв. данными из local storage
         for (var i = 0; i < dataArray.length; i++) {
-            $('tbody').append("<tr data-id=" + dataArray[i].id + ">\
+          $('tbody').append("<tr data-id=" + dataArray[i].id + ">\
 	        <td><label><input class='checkbox_class' type='checkbox' " + (dataArray[i].done ? "checked" : "") + ">done</input></label></td>\
 	        <td class='editable_cell'>" + dataArray[i].title + "</td>\
 	        <td class='editable_cell'>" + dataArray[i].author + "</td>\
 	        <td>" + dataArray[i].updated + "</td>\
 	        <td><button class='delete_button'>Delete</button></td>\
-	       </tr>");
+	        </tr>");
         }
     }
 }
 //--------------------------------------------------------------------------------------------------------------------------------\\
 function get_filtered_data(dataArray) {
     var radio = $('input[type=radio][name=rbtn]:checked').attr('id');
-    if (radio == 'completed') {
+    switch (radio) {
+      case "completed":
         return dataArray.filter(function(data) {
             return data.done;
         });
-    } else if (radio == 'not_completed') {
+      case "not_completed":
         return dataArray.filter(function(data) {
             return !data.done;
         });
+      default: 
+        return dataArray
     }
-    return dataArray;
 }
 //--------------------------------------------------------------------------------------------------------------------------------\\
 function clear_tbody() { //удаление элементов dom дерева
     $('tbody>tr').remove();
 }
 //--------------------------------------------------------------------------------------------------------------------------------\\
+
 $(document).ready(function() {
     //При загрузке DOM 
+
     $('input[type=radio][name=rbtn][id=all]').prop('checked', true);
     var dataArray = localStorage.data ? JSON.parse(localStorage.getItem("data")) : []; //переменная перевод массива из json'a в JS объект
     fill_table(dataArray);
@@ -54,16 +58,12 @@ $(document).ready(function() {
     $('#clear_all').click(function() {
         //Удалить из local storage
         //Ищем элемент в local storage по id
-        for (i = dataArray.length; i >= 0; i--) {
-            dataArray.splice(i, 1); //Удаляем
-            var serialObj = JSON.stringify(dataArray); //сериализуем его 
-            localStorage.setItem("data", serialObj); //запишем его в хранилище
-            $('tbody>tr').remove();
-        }
+        var serialObj = JSON.stringify([]); //сериализуем его 
+        localStorage.setItem("data", serialObj);
+        clear_tbody();
     });
     //--------------------------------------------------------------------------------------------------------------------------------\\
-    //клик по кнопке добавить
-    $('#add').click(function() {
+    $('#add').click(function() { //клик по кнопке добавить
         temp_date = currentDate();
         var obj = {
             id: +new Date(),
@@ -73,26 +73,18 @@ $(document).ready(function() {
             updated: temp_date
         };
 
-        if (($('#title').val() !== '') && ($('#author').val() != "")) {
-
-            //Если массив отсутствует
-            if (dataArray === null) {
-                dataArray = []; //Создаем пустой массив
-            }
-            dataArray[dataArray.length] = obj;
-
-            var serialObj = JSON.stringify(dataArray); //сериализуем его 
-            localStorage.setItem("data", serialObj); //запишем его в хранилище
-            $('tbody').append("<tr data-id=" + obj.id + ">\
-        <td><label><input class='checkbox_class' type='checkbox'>done</input></label></td>\
-        <td class='editable_cell'>" + obj.title + "</td>\
-        <td class='editable_cell'>" + obj.author + "</td>\
-        <td>" + temp_date + "</td>\
-        <td><button class='delete_button'>Delete</button></td>\
-       </tr>");
-        } else {
-            alert('The field can not be empty');
+        if (($('#title').val().trim() === '') && ($('#author').val().trim() === "")) {
+          return alert('The field can not be empty');
         }
+
+        //Если массив отсутствует
+        if (dataArray === null) {
+            dataArray = []; //Создаем пустой массив
+        }
+        dataArray[dataArray.length] = obj;
+
+        var serialObj = JSON.stringify(dataArray); //сериализуем его 
+        localStorage.setItem("data", serialObj); //запишем его в хранилище
         clear_tbody();
         fill_table(get_filtered_data(dataArray));
     });
@@ -115,7 +107,6 @@ $(document).ready(function() {
         tr.fadeOut(400, function() {
             tr.remove();
         });
-        return false;
     });
     //--------------------------------------------------------------------------------------------------------------------------------\\
     //КЛик на чекбокс 
@@ -134,7 +125,7 @@ $(document).ready(function() {
         var serialObj = JSON.stringify(dataArray); //сериализуем его 
         localStorage.setItem("data", serialObj); //запишем его в хранилище
     });
-    //-------------------------------------------------------------------------------------------------------------------------------\\
+    //--------------------------------------------------------------------------------------------------------------------------------\\
     //Удаление записей с done=true
     $('#rm_completed').click(function() {
         //Ищем элемент в local storage по id
@@ -148,7 +139,7 @@ $(document).ready(function() {
         var serialObj = JSON.stringify(dataArray); //сериализуем его 
         localStorage.setItem("data", serialObj); //запишем его в хранилище
     });
-    //-------------------------------------------------------------------------------------------------------------------------------\\
+    //--------------------------------------------------------------------------------------------------------------------------------\\
     //Изменение ячейки строки
     $('tbody').on('dblclick', '.editable_cell', function() {
         var OriginalContent = $(this).text();
